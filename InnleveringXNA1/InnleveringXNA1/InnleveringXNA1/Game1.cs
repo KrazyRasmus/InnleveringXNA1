@@ -46,6 +46,8 @@ namespace InnleveringXNA1
         private int _enemySpawnMaxMilliseconds = 2000;
         private int _nextSpawnTime = 0;
 
+        private Rectangle _endOfRoad;
+
         private Texture2D _CharacterBoy, _CharacterCatGirl, _CharacterHornGirl,
             _CharacterPinkGirl, _CharacterPrincessGirl, _gemBlue, _gemOrange, _gemGreen;
 
@@ -107,6 +109,9 @@ namespace InnleveringXNA1
             _rectGemBlue = new Rectangle(Window.ClientBounds.Width - 60, -20, 60, 60);
             _rectGemOrange = new Rectangle(Window.ClientBounds.Width - _rectGemBlue.Width * 2, -20, 60, 60);
             _rectGemGreen = new Rectangle(Window.ClientBounds.Width - _rectGemBlue.Width * 3, -20, 60, 60);
+
+            //rectangel placement to crash characters in end of screen.
+            _endOfRoad = new Rectangle(Window.ClientBounds.Width - _CharacterBoy.Width, Window.ClientBounds.Height - _CharacterBoy.Width, 40, 40);
 
 
             _backgroundWidth = 7;
@@ -260,6 +265,8 @@ namespace InnleveringXNA1
                     spriteBatch.Draw(_roofSouth, new Vector2(_roofSouth.Width * i, _roofBottom), Color.White);
             }
         }
+                // Der characters treffer veggen.
+  
 
         public void drawGem(int numberOfGems)
         {
@@ -341,7 +348,6 @@ namespace InnleveringXNA1
             {
                 spriteBatch.Draw(_heart, new Rectangle((_heart.Width - 55) * i, -15, 50, 60), Color.White);
             }
-
             spriteBatch.Draw(_CharacterBoy, _position, Color.White);
             spriteBatch.Draw(_CharacterHornGirl, _position, Color.White);
             spriteBatch.Draw(_CharacterPinkGirl, _position, Color.White);
