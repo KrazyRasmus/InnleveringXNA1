@@ -28,7 +28,7 @@ namespace InnleveringXNA1
 
         private Texture2D _roofNorthEast, _roofNorth, _roofEast,
             _roofSouthEast, _roofNorthWest, _roofWest, _roofSouthWest,
-            _roofSouth, _window, _wallBlock, _stoneBlock, _door;
+            _roofSouth, _window, _wallBlock, _stoneBlock, _door, _heart;
         private int _numberOfRoofNorth, _numberOfRoofSouth, _numberOfWall,
             _numberOfStone, _numberOfWindows, _topRoof, _rightRoof, _bottom, _rightWall,
             _roofBottom;
@@ -75,6 +75,7 @@ namespace InnleveringXNA1
             _wallBlock = this.Content.Load<Texture2D>("Wall Block Tall");
             _stoneBlock = this.Content.Load<Texture2D>("Stone Block");
             _door = this.Content.Load<Texture2D>("Door Tall Closed");
+            _heart = this.Content.Load<Texture2D>("Heart");
 
             _numberOfStone = 7;
             _numberOfWall = 5;
@@ -188,7 +189,16 @@ namespace InnleveringXNA1
 
             spriteBatch.Draw(_roofSouthEast, new Vector2(_rightRoof, _roofBottom), Color.White);
 
+            // Loop that draws the amount of lives left as hearts
+            for (int i = 0; i < _lives; i++)
+            {
+                spriteBatch.Draw(_heart, new Rectangle(_heart.Width * i, 0, 60, 120), Color.White);
+            }
+
             spriteBatch.End();
+
+
+       
 
             base.Draw(gameTime);
         }
