@@ -172,54 +172,6 @@ namespace InnleveringXNA1
 
             spriteBatch.Begin();
 
-            for (int i = 0; i < _numberOfStone; i++)
-            {
-                spriteBatch.Draw(_stoneBlock, new Vector2(_stoneBlock.Width * i, _bottom), Color.White);
-            }
-            for (int i = 0; i < _numberOfWall; i++)
-            {
-                spriteBatch.Draw(_wallBlock, new Vector2(_wallBlock.Width * i, _bottom - _wallBlock.Height + 65), Color.White);
-            }
-
-            spriteBatch.Draw(_wallBlock, new Vector2(_rightWall, _bottom - _wallBlock.Height + 65), Color.White);
-
-            spriteBatch.Draw(_door, new Vector2(_wallBlock.Width * 5, _bottom - _wallBlock.Height + 85), Color.White);
-
-            spriteBatch.Draw(_roofNorthWest, new Vector2(0, _topRoof), Color.White);
-
-            for (int i = 0; i < _numberOfRoofNorth; i++)
-            {
-                spriteBatch.Draw(_roofNorth, new Vector2(_roofNorthWest.Width + (i * _roofNorth.Width), _topRoof), Color.White);
-            }
-
-            spriteBatch.Draw(_roofNorth, new Vector2(_roofNorthWest.Width + 4 * _roofNorth.Width, 0), Color.White);
-
-
-
-            spriteBatch.Draw(_roofNorthEast, new Vector2(_rightRoof, _topRoof), Color.White);
-
-            spriteBatch.Draw(_roofWest, new Vector2(0, _bottom - _roofSouthWest.Height - 100), Color.White);
-
-            for (int i = 0; i < _numberOfWindows; i++)
-            {
-                spriteBatch.Draw(_window, new Vector2(_roofWest.Width + (_window.Width * i), _bottom - _roofSouthWest.Height - 60), Color.White);
-            }
-
-            spriteBatch.Draw(_roofSouthWest, new Vector2(0, _roofBottom), Color.White);
-
-            for (int i = 0; i < _numberOfRoofSouth; i++)
-            {
-                spriteBatch.Draw(_roofSouth, new Vector2(_roofSouthWest.Width + _roofSouth.Width * i, _roofBottom), Color.White);
-            }
-
-            spriteBatch.Draw(_roofSouthEast, new Vector2(_roofSouthWest.Width + _roofSouth.Width * _numberOfRoofSouth, _roofBottom), Color.White);
-
-            spriteBatch.Draw(_window, new Vector2(_roofSouthEast.Width + _roofSouth.Width * 4, _roofBottom), Color.White);
-
-            spriteBatch.Draw(_roofEast, new Vector2(_roofWest.Width + (_window.Width * 4) + _roofNorth.Width, _topRoof + 80), Color.White);
-
-            spriteBatch.Draw(_roofSouthEast, new Vector2(_rightRoof, _roofBottom), Color.White);
-
             // Loop that draws the amount of lives left as hearts
             for (int i = 0; i < _lives; i++)
             {
