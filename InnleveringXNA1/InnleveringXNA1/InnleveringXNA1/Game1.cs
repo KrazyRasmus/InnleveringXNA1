@@ -25,6 +25,7 @@ namespace InnleveringXNA1
         private MouseState _currentMouseState;
         private MouseState _previousMouseState;
         private Vector2 _position;
+        private Rectangle _mouseRectangle;
 
         private Texture2D _roofNorthEast, _roofNorth, _roofEast,
             _roofSouthEast, _roofNorthWest, _roofWest, _roofSouthWest,
@@ -111,7 +112,10 @@ namespace InnleveringXNA1
             if (_currentKeyboardState.IsKeyDown(Keys.Escape))
                 Exit();
             if (isMousePressed())
-                Console.WriteLine("Hei");
+            {
+                _position = new Vector2(_currentMouseState.X, _currentMouseState.Y);
+                Console.WriteLine("X: " + _currentMouseState.X + " Y: " + _currentMouseState.Y);
+            }
 
             base.Update(gameTime);
         }
@@ -127,7 +131,10 @@ namespace InnleveringXNA1
         {
             _currentMouseState = Mouse.GetState();
             if (_currentMouseState.LeftButton == ButtonState.Pressed && _previousMouseState.LeftButton == ButtonState.Released)
+            {
+                this._mouseRectangle = new Rectangle(_currentMouseState.X, _currentMouseState.Y, 10, 10);
                 return true;
+            }
             return false;
         }
 
