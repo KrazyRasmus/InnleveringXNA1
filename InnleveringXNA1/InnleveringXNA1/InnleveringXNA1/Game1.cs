@@ -303,12 +303,11 @@ namespace InnleveringXNA1
 
         private void ResetSpawnTime()
         {
-            _nextSpawnTime = (rand).Next(
+            _nextSpawnTime = rand.Next(
                 _enemySpawnMinMilliseconds,
                 _enemySpawnMaxMilliseconds);
             Console.WriteLine(_nextSpawnTime);
         }
-
 
         private void SpawnEnemy()
         {
