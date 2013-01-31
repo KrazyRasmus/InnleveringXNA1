@@ -1,0 +1,24 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InnleveringXNA1", "InnleveringXNA1\InnleveringXNA1\InnleveringXNA1.csproj", "{09E685DD-7331-4322-BA37-45F45C336B3C}"
+EndProject
+Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "InnleveringXNA1Content", "InnleveringXNA1\InnleveringXNA1Content\InnleveringXNA1Content.contentproj", "{5149B312-5225-4CC5-9DBA-43C37828C368}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{09E685DD-7331-4322-BA37-45F45C336B3C}.Debug|x86.ActiveCfg = Debug|x86
+		{09E685DD-7331-4322-BA37-45F45C336B3C}.Debug|x86.Build.0 = Debug|x86
+		{09E685DD-7331-4322-BA37-45F45C336B3C}.Release|x86.ActiveCfg = Release|x86
+		{09E685DD-7331-4322-BA37-45F45C336B3C}.Release|x86.Build.0 = Release|x86
+		{5149B312-5225-4CC5-9DBA-43C37828C368}.Debug|x86.ActiveCfg = Debug|x86
+		{5149B312-5225-4CC5-9DBA-43C37828C368}.Release|x86.ActiveCfg = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
