@@ -203,7 +203,7 @@ namespace InnleveringXNA1
             }
 
             spriteBatch.End();
-
+            // LOOOOOOOL
 
        
 
