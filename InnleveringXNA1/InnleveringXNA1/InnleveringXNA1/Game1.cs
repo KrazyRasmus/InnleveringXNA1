@@ -28,6 +28,8 @@ namespace InnleveringXNA1
         private Rectangle _mouseRectangle;
         private Rectangle _rectGemBlue, _rectGemOrange, _rectGemGreen;
 
+        private float movementSpeed;
+
         private Texture2D _roofNorthEast, _roofNorth, _roofEast,
             _roofSouthEast, _roofNorthWest, _roofWest, _roofSouthWest,
             _roofSouth, _window, _wallBlock, _stoneBlock, _door, _heart,
@@ -55,9 +57,8 @@ namespace InnleveringXNA1
         /// </summary>
         protected override void Initialize()
         {
-            _position = new Vector2(0, 100);
+            _position = new Vector2(0, 280);
             IsMouseVisible = true;
-
             base.Initialize();
         }
 
@@ -130,9 +131,12 @@ namespace InnleveringXNA1
 
             if (isMouseClicked())
             {
-                _position = new Vector2(_currentMouseState.X, _currentMouseState.Y);
+                _mouseRectangle = new Rectangle(_currentMouseState.X, _currentMouseState.Y, 10, 10);
                 Console.WriteLine("Hei");
             }
+
+            movementSpeed = 100f;
+           _position.X += (float)gameTime.ElapsedGameTime.TotalSeconds * movementSpeed;
 
             base.Update(gameTime);
         }
@@ -286,11 +290,11 @@ namespace InnleveringXNA1
                 spriteBatch.Draw(_heart, new Rectangle((_heart.Width -55) * i, -15, 50, 60), Color.White);
             }
 
-            spriteBatch.Draw(_CharacterBoy, new Vector2(0, _bottom), Color.White);
-            spriteBatch.Draw(_CharacterHornGirl, new Vector2(0, _bottom), Color.White);
-            spriteBatch.Draw(_CharacterPinkGirl, new Vector2(0, _bottom), Color.White);
-            spriteBatch.Draw(_CharacterPrincessGirl, new Vector2(0, _bottom), Color.White);
-            spriteBatch.Draw(_CharacterCatGirl, new Vector2(0, _bottom), Color.White);
+            spriteBatch.Draw(_CharacterBoy, _position, Color.White);
+            spriteBatch.Draw(_CharacterHornGirl, _position, Color.White);
+            spriteBatch.Draw(_CharacterPinkGirl, _position, Color.White);
+            spriteBatch.Draw(_CharacterPrincessGirl, _position, Color.White);
+            spriteBatch.Draw(_CharacterCatGirl, _position, Color.White);
 
             spriteBatch.End();
 
