@@ -199,7 +199,7 @@ namespace InnleveringXNA1
             // Loop that draws the amount of lives left as hearts
             for (int i = 0; i < _lives; i++)
             {
-                spriteBatch.Draw(_heart, new Rectangle(_heart.Width * i, 0, 60, 120), Color.White);
+                spriteBatch.Draw(_heart, new Rectangle((_heart.Width -55) * i, 0, 50, 60), Color.White);
             }
 
             spriteBatch.End();
