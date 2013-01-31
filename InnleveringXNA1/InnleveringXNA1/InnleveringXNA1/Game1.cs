@@ -192,5 +192,15 @@ namespace InnleveringXNA1
 
             base.Draw(gameTime);
         }
+
+        /// <summary>
+        /// Method that subtracts 1 from the variable _lives
+        /// </summary>
+        /// <returns>The current value of _lives</returns>
+        public int LoseLife()
+        {
+            _lives -= 1;
+            return _lives;
+        }
     }
 }
