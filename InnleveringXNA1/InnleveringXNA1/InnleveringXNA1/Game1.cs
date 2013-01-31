@@ -64,7 +64,6 @@ namespace InnleveringXNA1
         /// </summary>
         protected override void LoadContent()
         {
-
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             _roofNorthEast = this.Content.Load<Texture2D>("Roof North East");
@@ -125,9 +124,6 @@ namespace InnleveringXNA1
             base.Update(gameTime);
         }
 
-
-
-
         public bool IsKeyPressed(Keys key)
         {
             if (_currentKeyboardState.IsKeyDown(key) && _previousKeyboardState.IsKeyUp(key))
@@ -178,8 +174,6 @@ namespace InnleveringXNA1
             spriteBatch.Draw(_CharacterCatGirl, new Vector2(0, _bottom), Color.White);
 
             spriteBatch.End();
-
-       
 
             base.Draw(gameTime);
         }
