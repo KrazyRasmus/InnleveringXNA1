@@ -139,6 +139,7 @@ namespace InnleveringXNA1
            _position.X += (float)gameTime.ElapsedGameTime.TotalSeconds * movementSpeed;
 
             base.Update(gameTime);
+            // hva skjer a?
         }
 
         public bool IsKeyPressed(Keys key)
