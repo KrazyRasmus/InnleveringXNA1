@@ -164,7 +164,7 @@ namespace InnleveringXNA1
                 _drawBugBool = false;
             }
 
-
+          
             base.Update(gameTime);
             // hva skjer a?
         }
