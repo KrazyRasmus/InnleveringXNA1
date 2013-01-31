@@ -108,17 +108,23 @@ namespace InnleveringXNA1
         protected override void Update(GameTime gameTime)
         {
             Window.Title = "Capture the Cutes";
+            _previousMouseState = _currentMouseState;
             _currentKeyboardState = Keyboard.GetState();
+
             if (_currentKeyboardState.IsKeyDown(Keys.Escape))
                 Exit();
-            if (isMousePressed())
+
+            if (isMouseClicked())
             {
                 _position = new Vector2(_currentMouseState.X, _currentMouseState.Y);
-                Console.WriteLine("X: " + _currentMouseState.X + " Y: " + _currentMouseState.Y);
+                Console.WriteLine("Hei");
             }
 
             base.Update(gameTime);
         }
+
+
+
 
         public bool IsKeyPressed(Keys key)
         {
@@ -132,12 +138,19 @@ namespace InnleveringXNA1
             _currentMouseState = Mouse.GetState();
             if (_currentMouseState.LeftButton == ButtonState.Pressed && _previousMouseState.LeftButton == ButtonState.Released)
             {
-                this._mouseRectangle = new Rectangle(_currentMouseState.X, _currentMouseState.Y, 10, 10);
+                _mouseRectangle = new Rectangle(_currentMouseState.X, _currentMouseState.Y, 10, 10);
                 return true;
             }
             return false;
         }
 
+        private bool isMouseClicked()
+        {
+            _currentMouseState = Mouse.GetState();
+            if (_currentMouseState.LeftButton == ButtonState.Released && _previousMouseState.LeftButton == ButtonState.Pressed)
+                return true;
+            return false;
+        }
         /// <summary>
         /// This is called when the game should draw itself.
         /// </summary>
