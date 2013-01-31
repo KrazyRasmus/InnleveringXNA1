@@ -30,7 +30,9 @@ namespace InnleveringXNA1
 
         private Texture2D _roofNorthEast, _roofNorth, _roofEast,
             _roofSouthEast, _roofNorthWest, _roofWest, _roofSouthWest,
-            _roofSouth, _window, _wallBlock, _stoneBlock, _door, _heart;
+            _roofSouth, _window, _wallBlock, _stoneBlock, _door, _heart,
+            _enemyBug;
+
         private int _topRoof, _bottom, _roofBottom, _backgroundWidth;
 
 
@@ -83,6 +85,8 @@ namespace InnleveringXNA1
             _gemBlue = this.Content.Load<Texture2D>("Gem Blue");
             _gemOrange = this.Content.Load<Texture2D>("Gem Orange");
             _gemGreen = this.Content.Load<Texture2D>("Gem Green");
+            _enemyBug = this.Content.Load<Texture2D>("Enemy Bug");
+
 
             _CharacterBoy = this.Content.Load<Texture2D>("Character Boy");
             _CharacterCatGirl = this.Content.Load<Texture2D>("Character Cat Girl");
@@ -240,6 +244,30 @@ namespace InnleveringXNA1
                 spriteBatch.Draw(_gemGreen, _rectGemGreen, Color.White);
             }
         }
+
+        public void drawEnemyBug(int position)
+        {
+            if(position == 0)
+            {
+                spriteBatch.Draw(_enemyBug, new Rectangle(_window.Width * (position + 1) + 25, _topRoof + 100, 50, 100), Color.White);
+            }
+            if (position == 1)
+            {
+                spriteBatch.Draw(_enemyBug, new Rectangle(_window.Width * (position + 1) + 25, _topRoof + 100, 50, 100), Color.White);
+            }
+            if (position == 2)
+            {
+                spriteBatch.Draw(_enemyBug, new Rectangle(_window.Width * (position + 1) + 25, _topRoof + 100, 50, 100), Color.White);
+            }
+            if (position == 3)
+            {
+                spriteBatch.Draw(_enemyBug, new Rectangle(_window.Width * (position + 1) + 25, _topRoof + 100, 50, 100), Color.White);
+            }
+            if (position == 4)
+            {
+                spriteBatch.Draw(_enemyBug, new Rectangle(_window.Width * (position + 1) + 25, _topRoof + 140, 50, 100), Color.White);
+            }
+        }
         /// <summary>
         /// This is called when the game should draw itself.
         /// </summary>
@@ -251,8 +279,6 @@ namespace InnleveringXNA1
             spriteBatch.Begin();
 
             DrawBackground();
-
-            drawGem(3);
 
             // Loop that draws the amount of lives left as hearts
             for (int i = 0; i < _lives; i++)
