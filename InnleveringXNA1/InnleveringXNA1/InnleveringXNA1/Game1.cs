@@ -161,7 +161,6 @@ namespace InnleveringXNA1
 
 
             base.Update(gameTime);
-            // hva skjer a?
         }
 
         public bool IsKeyPressed(Keys key)
