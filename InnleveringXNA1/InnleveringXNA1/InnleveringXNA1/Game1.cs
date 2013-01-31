@@ -37,8 +37,9 @@ namespace InnleveringXNA1
 
         private int _topRoof, _bottom, _roofBottom, _backgroundWidth;
 
-
         private int _lives = 5;
+
+        private bool _drawBugBool;
 
         private Random rand = new Random();
         private int _enemySpawnMinMilliseconds = 1000;
@@ -134,7 +135,7 @@ namespace InnleveringXNA1
             _previousMouseState = _currentMouseState;
             _currentKeyboardState = Keyboard.GetState();
 
-            if (_currentKeyboardState.IsKeyDown(Keys.Escape))
+            if (_currentKeyboardState.IsKeyDown(Keys.Escape) || _lives == 0)
                 Exit();
 
             if (isMouseClicked())
@@ -144,23 +145,28 @@ namespace InnleveringXNA1
             }
 
             movementSpeed = 100f;
-           _position.X += (float)gameTime.ElapsedGameTime.TotalSeconds * movementSpeed;
+            _position.X += (float)gameTime.ElapsedGameTime.TotalSeconds * movementSpeed;
 
 
 
-           //Counts down from the _nextSpawnTime (with limits set
-           //to min 1000 and max 2000 milliseconds)
-           _nextSpawnTime -= gameTime.ElapsedGameTime.Milliseconds;
-           if (_nextSpawnTime < 0)
-           {
-               SpawnEnemy();
-               //Reset spawn timer
-               ResetSpawnTime();
-           }
-
+            //Counts down from the _nextSpawnTime (with limits set
+            //to min 1000 and max 2000 milliseconds)
+            _nextSpawnTime -= gameTime.ElapsedGameTime.Milliseconds;
+            if (_nextSpawnTime < 0)
+            {
+                SpawnEnemy();
+                Console.WriteLine("NÅ");
+                //Reset spawn timer
+                ResetSpawnTime();
+            }
+            else 
+            {
+                _drawBugBool = false;
+            }
 
 
             base.Update(gameTime);
+            // hva skjer a?
         }
 
         public bool IsKeyPressed(Keys key)
@@ -273,7 +279,7 @@ namespace InnleveringXNA1
 
         public void drawEnemyBug(int position)
         {
-            if(position == 0)
+            if (position == 0)
             {
                 spriteBatch.Draw(_enemyBug, new Rectangle(_window.Width * (position + 1) + 25, _topRoof + 100, 50, 100), Color.White);
             }
@@ -306,6 +312,7 @@ namespace InnleveringXNA1
 
         private void SpawnEnemy()
         {
+            _drawBugBool = true;
             Console.WriteLine("HAHAHHA");
             LoseLife();
         }
@@ -325,10 +332,15 @@ namespace InnleveringXNA1
 
             DrawBackground();
 
+            if (_drawBugBool)
+            {
+                drawEnemyBug(0);
+            }
+
             // Loop that draws the amount of lives left as hearts
             for (int i = 0; i < _lives; i++)
             {
-                spriteBatch.Draw(_heart, new Rectangle((_heart.Width -55) * i, -15, 50, 60), Color.White);
+                spriteBatch.Draw(_heart, new Rectangle((_heart.Width - 55) * i, -15, 50, 60), Color.White);
             }
 
             spriteBatch.Draw(_CharacterBoy, _position, Color.White);
