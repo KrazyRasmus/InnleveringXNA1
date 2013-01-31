@@ -34,7 +34,12 @@ namespace InnleveringXNA1
             _numberOfStone, _numberOfWindows, _topRoof, _rightRoof, _bottom, _rightWall,
             _roofBottom;
 
+
         private int _lives = 5;
+
+        private Texture2D _CharacterBoy, _CharacterCatGirl, _CharacterHornGirl,
+            _CharacterPinkGirl, _CharacterPrincessGirl;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -77,6 +82,12 @@ namespace InnleveringXNA1
             _stoneBlock = this.Content.Load<Texture2D>("Stone Block");
             _door = this.Content.Load<Texture2D>("Door Tall Closed");
             _heart = this.Content.Load<Texture2D>("Heart");
+
+            _CharacterBoy = this.Content.Load<Texture2D>("Character Boy");
+            _CharacterCatGirl = this.Content.Load<Texture2D>("Character Cat Girl");
+            _CharacterHornGirl = this.Content.Load<Texture2D>("Character Horn Girl");
+            _CharacterPinkGirl = this.Content.Load<Texture2D>("Character Pink Girl");
+            _CharacterPrincessGirl = this.Content.Load<Texture2D>("Character Princess Girl");
 
             _numberOfStone = 7;
             _numberOfWall = 5;
@@ -214,6 +225,12 @@ namespace InnleveringXNA1
             {
                 spriteBatch.Draw(_heart, new Rectangle((_heart.Width -55) * i, -15, 50, 60), Color.White);
             }
+
+            spriteBatch.Draw(_CharacterBoy, new Vector2(0, _bottom), Color.White);
+            spriteBatch.Draw(_CharacterHornGirl, new Vector2(0, _bottom), Color.White);
+            spriteBatch.Draw(_CharacterPinkGirl, new Vector2(0, _bottom), Color.White);
+            spriteBatch.Draw(_CharacterPrincessGirl, new Vector2(0, _bottom), Color.White);
+            spriteBatch.Draw(_CharacterCatGirl, new Vector2(0, _bottom), Color.White);
 
             spriteBatch.End();
             // LOOOOOOOL
