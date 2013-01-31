@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-// MOHAHAHAHAHHAAH
+
 namespace InnleveringXNA1
 {
     /// <summary>
@@ -26,6 +26,7 @@ namespace InnleveringXNA1
         private MouseState _previousMouseState;
         private Vector2 _position;
         private Rectangle _mouseRectangle;
+        private Rectangle _rectGemBlue, _rectGemOrange, _rectGemGreen;
 
         private Texture2D _roofNorthEast, _roofNorth, _roofEast,
             _roofSouthEast, _roofNorthWest, _roofWest, _roofSouthWest,
@@ -36,7 +37,7 @@ namespace InnleveringXNA1
         private int _lives = 5;
 
         private Texture2D _CharacterBoy, _CharacterCatGirl, _CharacterHornGirl,
-            _CharacterPinkGirl, _CharacterPrincessGirl;
+            _CharacterPinkGirl, _CharacterPrincessGirl, _gemBlue, _gemOrange, _gemGreen;
 
         public Game1()
         {
@@ -79,12 +80,20 @@ namespace InnleveringXNA1
             _stoneBlock = this.Content.Load<Texture2D>("Stone Block");
             _door = this.Content.Load<Texture2D>("Door Tall Closed");
             _heart = this.Content.Load<Texture2D>("Heart");
+            _gemBlue = this.Content.Load<Texture2D>("Gem Blue");
+            _gemOrange = this.Content.Load<Texture2D>("Gem Orange");
+            _gemGreen = this.Content.Load<Texture2D>("Gem Green");
 
             _CharacterBoy = this.Content.Load<Texture2D>("Character Boy");
             _CharacterCatGirl = this.Content.Load<Texture2D>("Character Cat Girl");
             _CharacterHornGirl = this.Content.Load<Texture2D>("Character Horn Girl");
             _CharacterPinkGirl = this.Content.Load<Texture2D>("Character Pink Girl");
             _CharacterPrincessGirl = this.Content.Load<Texture2D>("Character Princess Girl");
+
+            _rectGemBlue = new Rectangle(Window.ClientBounds.Width - 60, -20, 60, 60);
+            _rectGemOrange = new Rectangle(Window.ClientBounds.Width - _rectGemBlue.Width * 2, -20, 60, 60);
+            _rectGemGreen = new Rectangle(Window.ClientBounds.Width - _rectGemBlue.Width * 3, -20, 60, 60);
+
 
             _backgroundWidth = 7;
             _topRoof = -40;
@@ -215,6 +224,22 @@ namespace InnleveringXNA1
                     spriteBatch.Draw(_roofSouth, new Vector2(_roofSouth.Width * i, _roofBottom), Color.White);
             }
         }
+
+        public void drawGem(int numberOfGems)
+        {
+            if (numberOfGems >= 1)
+            {
+                spriteBatch.Draw(_gemBlue, _rectGemBlue, Color.White);
+            }
+            if (numberOfGems >= 2)
+            {
+                spriteBatch.Draw(_gemOrange, _rectGemOrange, Color.White);
+            }
+            if (numberOfGems == 3)
+            {
+                spriteBatch.Draw(_gemGreen, _rectGemGreen, Color.White);
+            }
+        }
         /// <summary>
         /// This is called when the game should draw itself.
         /// </summary>
@@ -226,6 +251,8 @@ namespace InnleveringXNA1
             spriteBatch.Begin();
 
             DrawBackground();
+
+            drawGem(3);
 
             // Loop that draws the amount of lives left as hearts
             for (int i = 0; i < _lives; i++)
