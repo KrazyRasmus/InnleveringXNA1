@@ -40,6 +40,11 @@ namespace InnleveringXNA1
 
         private int _lives = 5;
 
+        private Random rand = new Random();
+        private int _enemySpawnMinMilliseconds = 1000;
+        private int _enemySpawnMaxMilliseconds = 2000;
+        private int _nextSpawnTime = 0;
+
         private Texture2D _CharacterBoy, _CharacterCatGirl, _CharacterHornGirl,
             _CharacterPinkGirl, _CharacterPrincessGirl, _gemBlue, _gemOrange, _gemGreen;
 
@@ -57,6 +62,9 @@ namespace InnleveringXNA1
         /// </summary>
         protected override void Initialize()
         {
+            //Resets the spawn time
+            ResetSpawnTime();
+
             _position = new Vector2(0, 280);
             IsMouseVisible = true;
             base.Initialize();
@@ -137,6 +145,20 @@ namespace InnleveringXNA1
 
             movementSpeed = 100f;
            _position.X += (float)gameTime.ElapsedGameTime.TotalSeconds * movementSpeed;
+
+
+
+           //Counts down from the _nextSpawnTime (with limits set
+           //to min 1000 and max 2000 milliseconds)
+           _nextSpawnTime -= gameTime.ElapsedGameTime.Milliseconds;
+           if (_nextSpawnTime < 0)
+           {
+               SpawnEnemy();
+               //Reset spawn timer
+               ResetSpawnTime();
+           }
+
+
 
             base.Update(gameTime);
             // hva skjer a?
@@ -273,6 +295,25 @@ namespace InnleveringXNA1
                 spriteBatch.Draw(_enemyBug, new Rectangle(_window.Width * (position + 1) + 25, _topRoof + 140, 50, 100), Color.White);
             }
         }
+
+        private void ResetSpawnTime()
+        {
+            _nextSpawnTime = (rand).Next(
+                _enemySpawnMinMilliseconds,
+                _enemySpawnMaxMilliseconds);
+            Console.WriteLine(_nextSpawnTime);
+        }
+
+
+        private void SpawnEnemy()
+        {
+            Console.WriteLine("HAHAHHA");
+            LoseLife();
+        }
+
+
+
+
         /// <summary>
         /// This is called when the game should draw itself.
         /// </summary>
