@@ -30,9 +30,7 @@ namespace InnleveringXNA1
         private Texture2D _roofNorthEast, _roofNorth, _roofEast,
             _roofSouthEast, _roofNorthWest, _roofWest, _roofSouthWest,
             _roofSouth, _window, _wallBlock, _stoneBlock, _door, _heart;
-        private int _numberOfRoofNorth, _numberOfRoofSouth, _numberOfWall,
-            _numberOfStone, _numberOfWindows, _topRoof, _rightRoof, _bottom, _rightWall,
-            _roofBottom;
+        private int _topRoof, _bottom, _roofBottom, _backgroundWidth;
 
 
         private int _lives = 5;
@@ -89,16 +87,9 @@ namespace InnleveringXNA1
             _CharacterPinkGirl = this.Content.Load<Texture2D>("Character Pink Girl");
             _CharacterPrincessGirl = this.Content.Load<Texture2D>("Character Princess Girl");
 
-            _numberOfStone = 7;
-            _numberOfWall = 5;
-            _numberOfRoofSouth = 4;
-            _numberOfRoofNorth = 5;
-            _numberOfWindows = 4;
-
+            _backgroundWidth = 7;
             _topRoof = -40;
-            _rightRoof = _roofNorthWest.Width + 5 * _roofNorth.Width;
             _bottom = Window.ClientBounds.Height - _stoneBlock.Height;
-            _rightWall = _wallBlock.Width * 5 + _door.Width;
             _roofBottom = 115;
         }
 
@@ -172,6 +163,8 @@ namespace InnleveringXNA1
 
             spriteBatch.Begin();
 
+            DrawBackground();
+
             // Loop that draws the amount of lives left as hearts
             for (int i = 0; i < _lives; i++)
             {
@@ -185,7 +178,6 @@ namespace InnleveringXNA1
             spriteBatch.Draw(_CharacterCatGirl, new Vector2(0, _bottom), Color.White);
 
             spriteBatch.End();
-            // LOOOOOOOL
 
        
 
@@ -200,6 +192,88 @@ namespace InnleveringXNA1
         {
             _lives -= 1;
             return _lives;
+        }
+
+        public void DrawBackground()
+        {
+
+            // Loop that draws the bottom row of the background.
+            for (int i = 0; i < _backgroundWidth; i++)
+            {
+                spriteBatch.Draw(_stoneBlock, new Vector2(_stoneBlock.Width * i, _bottom), Color.White);
+            }
+
+            // Loop that draws the wall and door of the background. 
+            for (int i = 0; i < _backgroundWidth; i++)
+            {
+                if (i == 5)
+                {
+                    spriteBatch.Draw(_door, new Vector2(_wallBlock.Width * i, _bottom - _wallBlock.Height + 80), Color.White);
+                }
+                else
+                {
+                    spriteBatch.Draw(_wallBlock, new Vector2(_wallBlock.Width * i, _bottom - _wallBlock.Height + 60), Color.White);
+                }
+            }
+
+            // Loop that draws the top row of the roof
+            for (int i = 0; i < _backgroundWidth; i++)
+            {
+                if (i == 0)
+                {
+                    spriteBatch.Draw(_roofNorthWest, new Vector2(_window.Width * i, _topRoof), Color.White);
+                }
+                else if (i == 6)
+                {
+                    spriteBatch.Draw(_roofNorthEast, new Vector2(_window.Width * i, _topRoof), Color.White);
+                }
+                else
+                {
+                    spriteBatch.Draw(_roofNorth, new Vector2(_window.Width * i, _topRoof), Color.White);
+                }
+            }
+
+            // Loop that draws the middle row of the roof
+            for (int i = 0; i < _backgroundWidth; i++)
+            {
+                if (i == 0)
+                {
+                    spriteBatch.Draw(_roofWest, new Vector2(_window.Width * i, _bottom - _roofSouthWest.Height - 100), Color.White);
+                }
+                else if (i == 5)
+                {
+                    spriteBatch.Draw(_roofNorth, new Vector2(_window.Width * i, 0), Color.White);
+                }
+                else if (i == 6)
+                {
+                    spriteBatch.Draw(_roofEast, new Vector2(_window.Width * i, _bottom - _roofSouthWest.Height - 100), Color.White);
+                }
+                else
+                {
+                    spriteBatch.Draw(_window, new Vector2(_window.Width * i, _bottom - _roofSouthWest.Height - 60), Color.White);
+                }
+            }
+
+            // Loop that draws the bottom row of the roof.
+            for (int i = 0; i < _backgroundWidth; i++)
+            {
+                if (i == 0)
+                {
+                    spriteBatch.Draw(_roofSouthWest, new Vector2(0, _roofBottom), Color.White);
+                }
+                else if (i == 5)
+                {
+                    spriteBatch.Draw(_window, new Vector2(_roofSouth.Width * i, _roofBottom), Color.White);
+                }
+                else if (i == 6)
+                {
+                    spriteBatch.Draw(_roofSouthEast, new Vector2(_roofSouth.Width * i, _roofBottom), Color.White);
+                }
+                else
+                {
+                    spriteBatch.Draw(_roofSouth, new Vector2(_roofSouth.Width * i, _roofBottom), Color.White);
+                }
+            }
         }
     }
 }
