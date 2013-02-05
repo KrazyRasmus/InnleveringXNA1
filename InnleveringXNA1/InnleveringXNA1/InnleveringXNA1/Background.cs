@@ -12,46 +12,42 @@ using Microsoft.Xna.Framework.Media;
 
 namespace InnleveringXNA1
 {
-    class Background
+    class Background : GameObject
     {
-        SpriteBatch spriteBatch;
         private int _topRoof, _bottom, _roofBottom, _backgroundWidth;
 
-        Texture2D _roofNorthEast, _roofNorth, _roofEast, _roofSouthEast,
+        private Texture2D _roofNorthEast, _roofNorth, _roofEast, _roofSouthEast,
             _roofNorthWest, _roofWest, _roofSouthWest, _roofSouth, _window,
             _wallBlock, _stoneBlock, _door;
 
-        public Background() 
+        public Background(SpriteBatch spriteBatch, ContentManager content, int windowHeight)
+            : base(spriteBatch, content)
+        {
+            _roofNorthEast = content.Load<Texture2D>("Roof North East");
+            _roofNorth = content.Load<Texture2D>("Roof North");
+            _roofEast = content.Load<Texture2D>("Roof East");
+            _roofSouthEast = content.Load<Texture2D>("Roof South East");
+            _roofNorthWest = content.Load<Texture2D>("Roof North West");
+            _roofWest = content.Load<Texture2D>("Roof West");
+            _roofSouthWest = content.Load<Texture2D>("Roof South West");
+            _roofSouth = content.Load<Texture2D>("Roof South");
+            _window = content.Load<Texture2D>("Window Tall");
+            _wallBlock = content.Load<Texture2D>("Wall Block Tall");
+            _stoneBlock = content.Load<Texture2D>("Stone Block");
+            _door = content.Load<Texture2D>("Door Tall Closed");
+
+            _backgroundWidth = 7;
+            _topRoof = -40;
+            _bottom = windowHeight - _stoneBlock.Height;
+            _roofBottom = 115;
+        }
+
+        public override void Update(GameTime gameTime) 
         {
 
         }
 
-        public Background(SpriteBatch spriteBatch, Texture2D _roofNorthEast, Texture2D _roofNorth, Texture2D _roofEast,
-            Texture2D _roofSouthEast, Texture2D _roofNorthWest, Texture2D _roofWest, 
-            Texture2D _roofSouthWest, Texture2D _roofSouth, Texture2D _window, 
-            Texture2D _wallBlock, Texture2D _stoneBlock, Texture2D _door, int _topRoof, 
-            int _bottom, int _roofBottom, int _backgroundWidth) 
-        {
-            this.spriteBatch = spriteBatch;
-            this._roofNorthEast = _roofNorthEast;
-            this._roofNorth = _roofNorth;
-            this._roofEast = _roofEast;
-            this._roofSouthEast = _roofSouthEast;
-            this._roofNorthWest = _roofNorthWest;
-            this._roofWest = _roofWest;
-            this._roofSouthWest = _roofSouthWest;
-            this._roofSouth = _roofSouth;
-            this._window = _window;
-            this._wallBlock = _wallBlock;
-            this._stoneBlock = _stoneBlock;
-            this._door = _door;
-            this._topRoof = _topRoof;
-            this._bottom = _bottom;
-            this._roofBottom = _roofBottom;
-            this._backgroundWidth = _backgroundWidth;
-        }
-
-        public void drawBackground()
+        public override void Draw()
         {
             drawStreet();
             drawWall();

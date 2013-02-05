@@ -12,68 +12,105 @@ using Microsoft.Xna.Framework.Media;
 
 namespace InnleveringXNA1
 {
-    class EnemyBugs
+    class EnemyBugs : GameObject
     {
-        SpriteBatch spriteBatch;
-        Texture2D enemyBug;
-        Texture2D gemBlue, gemOrange, gemGreen; 
-        Rectangle rectGemBlue, rectGemOrange, rectGemGreen;
-        int posX, posY, numberOfGems;
+        private Texture2D enemyBug;
+        private Texture2D gemBlue, gemOrange, gemGreen;
+        private Rectangle rectGemBlue, rectGemOrange, rectGemGreen, _mouseRectangle;
+        private int _posX, _posY, _numberOfGems, _timeWithoutRandoms,
+            _timeSinceLastRandom, _timeBetweenRandoms, _position,
+            _timeWithRandoms, _mouseCounter;
+        private Random rand;
+        private MouseState _currentMouseState, _previousMouseState;
 
-        public EnemyBugs() 
+
+        public EnemyBugs(SpriteBatch spriteBatch, ContentManager content, int windowWidth)
+            : base(spriteBatch, content)
         {
+            rectGemBlue = new Rectangle(windowWidth - 60, -20, 60, 60);
+            rectGemOrange = new Rectangle(windowWidth - rectGemBlue.Width * 2, -20, 60, 60);
+            rectGemGreen = new Rectangle(windowWidth - rectGemBlue.Width * 3, -20, 60, 60);
+            _posX = 101;
+            _posY = -40;
+            _timeSinceLastRandom = 0;
+            _timeBetweenRandoms = 5000;
+            _timeWithRandoms = _timeBetweenRandoms - 600;
+            _numberOfGems = 0;
+            _mouseCounter = 0;
 
+            rand = new Random();
+
+            enemyBug = content.Load<Texture2D>("Enemy Bug");
+            gemBlue = content.Load<Texture2D>("Gem Blue");
+            gemOrange = content.Load<Texture2D>("Gem Orange");
+            gemGreen = content.Load<Texture2D>("Gem Green");
         }
 
-        public EnemyBugs(SpriteBatch spriteBatch, Texture2D enemyBug,
-            Texture2D gemBlue, Texture2D gemOrange, Texture2D gemGreen, 
-            Rectangle rectGemBlue, Rectangle rectGemOrange, 
-            Rectangle rectGemGreen, int posX, int posY, int numberOfGems) 
+
+
+        public override void Update(GameTime gameTime)
         {
-            this.spriteBatch = spriteBatch;
-            this.enemyBug = enemyBug;
-            this.gemBlue = gemBlue;
-            this.gemOrange = gemOrange;
-            this.gemGreen = gemGreen;
-            this.rectGemBlue = rectGemBlue;
-            this.rectGemOrange = rectGemOrange;
-            this.rectGemGreen = rectGemGreen;
-            this.posX = posX;
-            this.posY = posY;
-            this.numberOfGems = numberOfGems;
-            
+            _timeWithoutRandoms += gameTime.ElapsedGameTime.Milliseconds;
+            _timeSinceLastRandom += gameTime.ElapsedGameTime.Milliseconds;
+
+            if (_timeSinceLastRandom > _timeBetweenRandoms)
+            {
+                _timeSinceLastRandom -= _timeBetweenRandoms;
+                _position = rand.Next(1, 6);
+                Console.WriteLine(_position);
+            }
+            if (_timeWithoutRandoms > _timeWithRandoms)
+            {
+                _mouseCounter = 0;
+                _timeWithoutRandoms = (_timeWithRandoms - _timeBetweenRandoms);
+                _position = 0;
+            }
+            if (isMousePressed()) 
+            {
+                _mouseCounter++;
+                Console.WriteLine(_mouseCounter);
+                if (_mouseCounter == 20)
+                    _numberOfGems++;
+            }
+            if (_numberOfGems == 3) 
+            {
+            }
         }
 
-        public void drawBug(int random) 
+        public override void Draw()
         {
-            switch (random){
+            drawGem(_numberOfGems);
+
+            switch (_position)
+            {
                 case 1:
-                    spriteBatch.Draw(enemyBug, new Rectangle((posX * random) + 25, posY + 100, 50, 100), Color.White);
+                    spriteBatch.Draw(enemyBug, new Rectangle((_posX * _position) + 25, _posY + 100, 50, 100), Color.White);
                     break;
-            
+
                 case 2:
-                    spriteBatch.Draw(enemyBug, new Rectangle((posX * random) + 25, posY + 100, 50, 100), Color.White);
+                    spriteBatch.Draw(enemyBug, new Rectangle((_posX * _position) + 25, _posY + 100, 50, 100), Color.White);
                     break;
 
                 case 3:
-                    spriteBatch.Draw(enemyBug, new Rectangle((posX * random) + 25, posY + 100, 50, 100), Color.White);
+                    spriteBatch.Draw(enemyBug, new Rectangle((_posX * _position) + 25, _posY + 100, 50, 100), Color.White);
                     break;
 
                 case 4:
-                    spriteBatch.Draw(enemyBug, new Rectangle((posX * random) + 25, posY + 100, 50, 100), Color.White);
+                    spriteBatch.Draw(enemyBug, new Rectangle((_posX * _position) + 25, _posY + 100, 50, 100), Color.White);
                     break;
 
                 case 5:
-                    spriteBatch.Draw(enemyBug, new Rectangle((posX * random) + 25, posY + 140, 50, 100), Color.White);
+                    spriteBatch.Draw(enemyBug, new Rectangle((_posX * _position) + 25, _posY + 140, 50, 100), Color.White);
                     break;
-                
-                default: 
+
+                default:
                     break;
             }
         }
 
-        public void drawGem()
+        public void drawGem(int numberOfGems)
         {
+            //Console.WriteLine("halla balla");
             if (numberOfGems >= 1)
             {
                 spriteBatch.Draw(gemBlue, rectGemBlue, Color.White);
@@ -86,6 +123,26 @@ namespace InnleveringXNA1
             {
                 spriteBatch.Draw(gemGreen, rectGemGreen, Color.White);
             }
+        }
+
+        public bool isMousePressed()
+        {
+            _previousMouseState = _currentMouseState;
+            _currentMouseState = Mouse.GetState();
+            if (_currentMouseState.LeftButton == ButtonState.Pressed && _previousMouseState.LeftButton == ButtonState.Released)
+            {
+                _mouseRectangle = new Rectangle(_currentMouseState.X, _currentMouseState.Y, 10, 10);
+                return true;
+            }
+            return false;
+        }
+
+        public bool isGameWon() 
+        {
+            if (_numberOfGems == 3)
+                return true;
+            else
+                return false;
         }
     }
 }
