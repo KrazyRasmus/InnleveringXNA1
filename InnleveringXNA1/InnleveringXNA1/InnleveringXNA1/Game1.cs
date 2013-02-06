@@ -50,7 +50,7 @@ namespace InnleveringXNA1
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            characterHandler = new CharacterHandler(spriteBatch, Content, Window.ClientBounds.Height);
+            characterHandler = new CharacterHandler(spriteBatch, Content);
 
             drawBackground = new Background(spriteBatch, Content, Window.ClientBounds.Height);
 
@@ -77,9 +77,9 @@ namespace InnleveringXNA1
         {
             Window.Title = "Capture the Cutes";
 
-            enemyBug.Update(gameTime);
+            enemyBug.Update();
 
-            characterHandler.Update(gameTime);
+            characterHandler.Update();
 
             if (enemyBug.isGameWon())
                 Exit();

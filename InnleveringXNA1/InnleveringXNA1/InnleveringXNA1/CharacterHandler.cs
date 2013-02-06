@@ -2,105 +2,66 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Content;
+using System.Diagnostics;
 
 namespace InnleveringXNA1
 {
     class CharacterHandler : GameObject
     {
 
-        private Texture2D[] _charArray;
-        private List<Vector2> _charPosList;
-        private List<int> _charToDraw;
-        private Random random;
-        private int _windowHeight, _timeToAddCharacter, _timeBetweenCharacters; 
-        private MouseState _previousMouseState, _currentMouseState;
-        private Rectangle _mouseRectangle;
-        private Vector2 _characterPosition;
-        Texture2D _boy;
-        public CharacterHandler(SpriteBatch spriteBatch, ContentManager content, int windowHeight)
+        private List<Character> _characterList;
+        private Stopwatch _gameTime;
+        private Random rand;
+        private int _timeBetweenCharacters, _timeSinceLastRandom;
+        private int lifeCount = 5;
+
+        public CharacterHandler(SpriteBatch spriteBatch, ContentManager content)
             : base(spriteBatch, content)
         {
-            _charPosList = new List<Vector2>();
-            _charToDraw = new List<int>();
-            _timeToAddCharacter = 0;
-            _timeBetweenCharacters = 2000;
-            _windowHeight = windowHeight;
-            random = new Random();
-            _boy = content.Load<Texture2D>("Character Boy");
-            _charArray = new Texture2D[]{
-                content.Load<Texture2D>("Character Boy"),
-                content.Load<Texture2D>("Character Cat Girl"),
-                content.Load<Texture2D>("Character Horn Girl"),
-                content.Load<Texture2D>("Character Pink Girl"),
-                content.Load<Texture2D>("Character Princess Girl")
-            };
-            AddCharacter();
+            rand = new Random();
+            _characterList = new List<Character>();
+            _characterList.Add(new Character(spriteBatch, content));
+
+            _gameTime = new Stopwatch();
+            
+            _timeBetweenCharacters = rand.Next(1000, 5000);
+            _timeSinceLastRandom = 0;
+
+            _gameTime.Start();
         }
 
-        
-
-        public override void Update(GameTime gameTime)
+        internal override void Update()
         {
-            CharacterPos();
-            _timeToAddCharacter += gameTime.ElapsedGameTime.Milliseconds;
-            if (_timeToAddCharacter >= _timeBetweenCharacters && _charToDraw.Count < 10) 
+            _timeSinceLastRandom += (int)_gameTime.ElapsedMilliseconds;
+            _gameTime.Restart();
+            if (_timeSinceLastRandom > _timeBetweenCharacters && _characterList.Count < 10)
             {
-                _timeToAddCharacter = 0;
-                AddCharacter();
+                _characterList.Add(new Character(spriteBatch, content));
+                _timeSinceLastRandom = 0;
+                _timeBetweenCharacters = rand.Next(1000, 5000);
             }
-            CharacterHitBox();
-            if (isMousePressed() && _mouseRectangle.Intersects(CharacterHitBox()))
+
+            foreach (Character character in _characterList)
             {
-                _characterPosition.X = -100;
+                character.Update();
+                if (character.hitCharacter)
+                {
+                    lifeCount--;
+                }
             }
         }
-
-        public override void Draw()
+        public int getLifeCount()
         {
-            spriteBatch.Draw(_boy, CharacterHitBox(), Color.Blue);
-            for (int i = 0; i < _charPosList.Count; i++)
-            {
-                spriteBatch.Draw(_charArray[_charToDraw[i]], _charPosList[i], Color.White);
-            }
+            return lifeCount;
         }
 
-        private void CharacterPos()
+        internal override void Draw()
         {
-            for (int i = 0; i < _charPosList.Count; i++)
-            {
-                _characterPosition = new Vector2(_charPosList[i].X + 3, _charPosList[i].Y);
-                _charPosList[i] = _characterPosition;
-            }
+            foreach (Character c in _characterList)
+                c.Draw();
         }
 
-        private void AddCharacter()
-        {
-            _charToDraw.Add(random.Next(0, 5));
-            _charPosList.Add(new Vector2(-_charArray[0].Bounds.Width, _windowHeight - _charArray[0].Bounds.Height));
-        }
-
-        private Rectangle CharacterHitBox() 
-        {
-            return new Rectangle((int)_characterPosition.X, (int)_characterPosition.Y, 65, 80);
-        }
-
-        public bool isMousePressed()
-        {
-            _previousMouseState = _currentMouseState;
-            _currentMouseState = Mouse.GetState();
-            if (_currentMouseState.LeftButton == ButtonState.Pressed && _previousMouseState.LeftButton == ButtonState.Released)
-            {
-                _mouseRectangle = new Rectangle(_currentMouseState.X, _currentMouseState.Y, 10, 10);
-                return true;
-            }
-            return false;
-        }
     }
 }

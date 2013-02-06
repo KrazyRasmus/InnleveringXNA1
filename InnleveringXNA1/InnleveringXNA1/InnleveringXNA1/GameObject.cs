@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -13,16 +14,16 @@ namespace InnleveringXNA1
 {
     abstract class GameObject
     {
-        protected SpriteBatch spriteBatch;
-        protected ContentManager content;
+        internal SpriteBatch spriteBatch;
+        internal ContentManager content;
 
-        public GameObject(SpriteBatch spriteBatch, ContentManager content)
+        internal GameObject(SpriteBatch spriteBatch, ContentManager content)
         {
             this.spriteBatch = spriteBatch;
             this.content = content;
         }
 
-        public abstract void Update(GameTime gameTime);
-        public abstract void Draw();
+        internal abstract void Update();
+        internal abstract void Draw();
     }
 }

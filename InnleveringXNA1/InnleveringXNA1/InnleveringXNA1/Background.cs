@@ -42,12 +42,12 @@ namespace InnleveringXNA1
             _roofBottom = 115;
         }
 
-        public override void Update(GameTime gameTime) 
+        internal override void Update() 
         {
 
         }
 
-        public override void Draw()
+        internal override void Draw()
         {
             drawStreet();
             drawWall();
