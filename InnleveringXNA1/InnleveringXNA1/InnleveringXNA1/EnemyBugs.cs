@@ -38,7 +38,7 @@ namespace InnleveringXNA1
 
             _posX = 101;
             _posY = -40;
-            _timeBetweenRandoms = 5000;
+            _timeBetweenRandoms = 10000;
             _timeWithRandoms = _timeBetweenRandoms - 600;
             _numberOfGems = 0;
             _mouseCounter = 0;
